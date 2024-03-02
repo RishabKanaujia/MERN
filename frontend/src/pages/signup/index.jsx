@@ -7,13 +7,14 @@ import {
 import { useState } from "react";
 import styles from "./style.module.css";
 import Input from "../../components/input";
-import {useNavigate} from 'react-router-dom'
+import {useNavigate, Link} from 'react-router-dom'
 
 const SignUp = () => {
   const { userLoggedIn, currentUser } = useAuth();
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [showerror, setShowError] = useState(false);
   const [isSigningIn, setIsSigningIn] = useState(false);
 
   const navigate = useNavigate();
@@ -27,8 +28,12 @@ const SignUp = () => {
   const handleSignup = async (e) => {
     e.preventDefault();
     if (!isSigningIn) {
-      //   setIsSigningIn(true);
-      await doCreateUserWithEmailAndPassword(username, password);
+      try {
+        await doCreateUserWithEmailAndPassword(username, password);
+      } catch (error) {
+        console.log(setShowError(true))
+      }
+     
       // doSendEmailVerification()
       console.log(username, password);
     }
@@ -38,7 +43,12 @@ const SignUp = () => {
 
   const googleSignUp = async (e) => {
     e.preventDefault();
-    await doSignInWithGoogle();
+    try {
+      await doSignInWithGoogle();
+    } catch (error) {
+      console.log(setShowError(true))
+    }
+    
   };
 
   return (
@@ -67,6 +77,13 @@ const SignUp = () => {
           Sign Up with Google
         </button>
       </form>
+      {showerror&&<label className={styles.errorText}>Error Signing In</label>}
+      <div>
+      <label>
+      Already have an account?
+      </label>
+      <Link to="/login"> Login</Link>
+      </div>
     </div>
   );
 };

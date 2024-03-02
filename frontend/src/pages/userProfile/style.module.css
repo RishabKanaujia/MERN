@@ -1,3 +1,4 @@
+
 .userProfile {
 
 
@@ -6,10 +7,34 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    
 }
 
+
+.navbar{
+    display: flex;
+    width: 90%;
+    padding: 1%;
+    height:  50px;
+    position: fixed;
+    justify-content: end;
+    top: 10px;
+    border-radius: 100px;
+    background-color: rgb(232, 230, 230);
+}
+
+.navbar button{
+    color: white;
+    background-color: rgb(43, 43, 43);
+    width: 100px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+
+}
 .coverImg{
-height: 200px;
+height: 400px;
 width: 100%;
 object-fit: cover;
 }
@@ -20,6 +45,7 @@ object-fit: cover;
     height: 200px;
     border-radius: 100px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    object-fit: cover;
 }
 
 .userInfo{

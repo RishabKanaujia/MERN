@@ -20,6 +20,7 @@
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    margin-bottom: 15px;
   }
   
   .loginForm input {
@@ -42,3 +43,6 @@
     background-color: #0056b3;
   }
   
+  .errorText{
+    color: red;
+  }

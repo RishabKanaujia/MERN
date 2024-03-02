@@ -7,8 +7,10 @@ import generateQRCode from "../../utils/qrCode";
 import { getUserfromId } from "../../utils/function";
 import { doSignOut } from "../../firebase/auth";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/authContext";
 
 const UserProfile = () => {
+  const {userLoggedIn} = useAuth();
   const navigate = useNavigate();
   const { id } = useParams();
   const [user, setUser] = useState({
@@ -22,14 +24,16 @@ const UserProfile = () => {
 
   const getuser = async () => {
     const response = await getUserfromId(id);
+    
     if (response) {
+      if(response.data===""){
+        navigate("/createProfile")
+      }
       setUser(response.data);
-      
     }
   };
 
   const url = useLocation();
-  
 
   const [qrSrc, setQrSrc] = useState("");
 
@@ -45,13 +49,20 @@ const UserProfile = () => {
 
   const logout = async () => {
     await doSignOut();
-    navigate('/login')
+    navigate("/login");
   };
+
+  const login = async () => {
+    
+    navigate("/login");
+  };
+
 
   return (
     <div className={styles.userProfile}>
-      <div>
-        <button onClick={logout}>Logout</button>
+      <div className={styles.navbar}>
+        {userLoggedIn?<button onClick={logout}>Logout</button>:<button onClick={login}>Login</button>}
+        
       </div>
       <img className={styles.coverImg} src={user.coverPhoto} alt="" />
       <img className={styles.profileImg} src={user.profilePhoto} alt="" />
@@ -61,18 +72,18 @@ const UserProfile = () => {
         <div className={styles.userInfo}>
           <FlipBox
             data={{ label: "Gender", value: user.gender }}
-            color1={"#502274"}
-            color2={"#061492"}
+            color1={"#0081D0"}
+            color2={"#008F79"}
           />
           <FlipBox
             data={{ label: "Phone", value: user.phone }}
-            color1={"#70764D"}
-            color2={"##780016"}
+            color1={"#4B4453"}
+            color2={"#D03C2A"}
           />
           <FlipBox
             data={{ label: "D.O.B", value: user.dob }}
-            color1={"#D6A336"}
-            color2={"#E9C0E9"}
+            color1={"#005245"}
+            color2={"#845EC3"}
           />
         </div>
         <div className={styles.qrHolder}>

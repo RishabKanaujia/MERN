@@ -16,6 +16,7 @@ const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isSigningIn, setIsSigningIn] = useState(false);
+  const [showerror, setShowError] = useState(false);
   const navigate = useNavigate();
   const isLoggedIn = () => {
     if (userLoggedIn) {
@@ -27,14 +28,24 @@ const Login = () => {
     e.preventDefault();
     if (!isSigningIn) {
       setIsSigningIn(true);
-      await doSignInWithEmailAndPassword(username, password);
+      try {
+        await doSignInWithEmailAndPassword(username, password);
+      } catch (error) {
+        console.log(setShowError(true))
+      }
+      
       // doSendEmailVerification()
       console.log(username, password);
     }
   };
   const googleLogin = async (e) => {
     e.preventDefault();
-    await doSignInWithGoogle();
+    try {
+      await doSignInWithGoogle();
+    } catch (error) {
+      console.log(setShowError(true))
+    }
+   
   };
 
  
@@ -60,9 +71,17 @@ const Login = () => {
         </button>
         <h4>OR</h4>
         <button type="button" onClick={googleLogin}>
-          Sign Up with Google
+          Sign In with Google
         </button>
       </form>
+      {showerror&&<label className={styles.errorText}>Error Signing In</label>}
+      <div>
+      <label>
+        Create New Account?
+      </label>
+      <Link to="/signup"> Sign Up</Link>
+      </div>
+      
     </div>
   );
 };

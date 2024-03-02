@@ -1,19 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useAuth } from "../../context/authContext";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+  const navigate = useNavigate()
   const { currentUser } = useAuth();
-  console.log(currentUser)
+  useEffect(()=>{
+    navigate('/login')
+  })
+  
+  
   return (
-    <div className="text-2xl font-bold pt-14">
-
-      Hello{" "}
-      {currentUser.displayName ? currentUser.displayName : currentUser.email},
-      you are now logged in.
-
-      <Link to="/" > </Link>
-      
+    <div className="text-2xl font-bold pt-14">home
     </div>
   );
 };
